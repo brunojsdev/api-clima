@@ -21,7 +21,8 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            overflow: hidden;
+            flex-direction: column;
+            gap: 20px;
         }
 
         .weather-card {
@@ -54,7 +55,7 @@
             margin-bottom: 20px;
         }
 
-        button {
+        .update-btn {
             background: transparent;
             border: 1px solid var(--cor-primaria);
             color: var(--cor-primaria);
@@ -63,9 +64,11 @@
             cursor: pointer;
             font-weight: bold;
             transition: 0.3s;
+            text-transform: uppercase;
+            font-size: 0.8rem;
         }
 
-        button:hover {
+        .update-btn:hover {
             background: var(--cor-primaria);
             color: black;
             box-shadow: 0 0 15px var(--cor-primaria);
@@ -76,6 +79,29 @@
             font-size: 0.8rem;
             color: #64748b;
         }
+
+        /* Estilo do Botão Voltar */
+        .btn-voltar {
+            padding: 10px 25px;
+            background: transparent;
+            border: 1px solid var(--cor-primaria);
+            color: var(--cor-primaria);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: inline-block;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .btn-voltar:hover {
+            background: var(--cor-primaria);
+            color: #050a14;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body>
@@ -84,14 +110,17 @@
         <div class="icon">⛅</div>
         <div class="temp">24°C</div>
         <div class="city">São Bernardo do Campo</div>
-        <button onclick="updateWeather()">Atualizar Clima</button>
+        <button class="update-btn" onclick="updateWeather()">Atualizar Clima</button>
         <div class="status">Última atualização: Agora</div>
     </div>
+
+    <!-- Botão Voltar -->
+    <a href="https://brunojsdev.github.io/meu-portfolio/#" class="btn-voltar">← Voltar ao Início</a>
 
     <script>
         function updateWeather() {
             const card = document.getElementById("weather-card");
-            const btn = card.querySelector("button");
+            const btn = card.querySelector(".update-btn");
             const status = card.querySelector(".status");
             
             // Simula estado de carregamento
