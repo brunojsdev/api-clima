@@ -3,109 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="icon" type="image/png" href="./img/fi-clima.png">
-
     <title>Clima | Bruno Silveira</title>
-    <style>
-        :root {
-            --cor-bg-main: #050a14;
-            --cor-bg-card: #0b1221;
-            --cor-primaria: #00ff88;
-            --cor-texto: #e2e8f0;
-        }
-
-        body {
-            background-color: var(--cor-bg-main);
-            color: var(--cor-texto);
-            font-family: 'Segoe UI', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .weather-card {
-            background: linear-gradient(145deg, #0b1221, #0f172a);
-            border: 1px solid var(--cor-primaria);
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-            width: 300px;
-            box-shadow: 0 0 30px rgba(0, 255, 136, 0.15);
-            position: relative;
-        }
-
-        .icon {
-            font-size: 5rem;
-            margin-bottom: 10px;
-            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
-        }
-
-        .temp {
-            font-size: 4rem;
-            font-weight: bold;
-            color: var(--cor-primaria);
-        }
-
-        .city {
-            font-size: 1.2rem;
-            color: #94a3b8;
-            margin-top: -10px;
-            margin-bottom: 20px;
-        }
-
-        .update-btn {
-            background: transparent;
-            border: 1px solid var(--cor-primaria);
-            color: var(--cor-primaria);
-            padding: 10px 20px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.3s;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-        }
-
-        .update-btn:hover {
-            background: var(--cor-primaria);
-            color: black;
-            box-shadow: 0 0 15px var(--cor-primaria);
-        }
-
-        .status {
-            margin-top: 15px;
-            font-size: 0.8rem;
-            color: #64748b;
-        }
-
-        /* Estilo do Botão Voltar */
-        .btn-voltar {
-            padding: 10px 25px;
-            background: transparent;
-            border: 1px solid var(--cor-primaria);
-            color: var(--cor-primaria);
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: all 0.3s;
-            display: inline-block;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-        }
-
-        .btn-voltar:hover {
-            background: var(--cor-primaria);
-            color: #050a14;
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
-            transform: translateY(-2px);
-        }
-    </style>
+    <link rel="icon" type="image/png" href="img/favicon-clima.png">
+    <link rel="stylesheet" href="clima.css">
 </head>
 <body>
 
@@ -118,41 +18,8 @@
     </div>
 
     <!-- Botão Voltar -->
-    <a href="https://brunojsdev.github.io/meu-portfolio/#" class="btn-voltar">← Voltar ao Início</a>
+    <a href="https://brunojsdev.github.io/meu-portfolio/" class="btn-voltar">← Voltar ao Início</a>
 
-    <script>
-        function updateWeather() {
-            const card = document.getElementById("weather-card");
-            const btn = card.querySelector(".update-btn");
-            const status = card.querySelector(".status");
-            
-            // Simula estado de carregamento
-            btn.innerText = "Buscando...";
-            btn.disabled = true;
-            status.innerText = "Conectando ao satélite...";
-
-            setTimeout(() => {
-                // Gera dados aleatórios para simular mudança
-                const temps = [22, 23, 24, 25, 21];
-                const icons = ["⛅", "⛈️", "☀️", "🌧️"];
-                
-                const randomTemp = temps[Math.floor(Math.random() * temps.length)];
-                const randomIcon = icons[Math.floor(Math.random() * icons.length)];
-
-                // Atualiza UI
-                card.querySelector(".temp").innerText = randomTemp + "°C";
-                card.querySelector(".icon").innerText = randomIcon;
-                
-                // Reseta Botão
-                btn.innerText = "Atualizar Clima";
-                btn.disabled = false;
-                
-                // Atualiza hora
-                const now = new Date();
-                status.innerText = "Atualizado às " + now.toLocaleTimeString();
-
-            }, 1500);
-        }
-    </script>
+    <script src="clima.js"></script>
 </body>
 </html>
