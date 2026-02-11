@@ -21,7 +21,7 @@ function updateWeather() {
     }, 1500);
 }
 
-// --- FUNDO: ÍCONES DE CLIMA VETORIAIS (ESTILO APP) ---
+// --- FUNDO: ÍCONES VETORIAIS GEOMÉTRICOS (PREMIUM FLAT DESIGN) ---
 const canvas = document.getElementById('bg-canvas');
 const ctx = canvas.getContext('2d');
 
@@ -34,117 +34,130 @@ function resize() {
     initAnimation();
 }
 
-// Funções de desenho para formas específicas
-function drawSun(x, y, size, opacity) {
+// Desenho de um Sol Moderno (Círculo com raios geométricos)
+function drawModernSun(x, y, size, opacity) {
     ctx.save();
     ctx.translate(x, y);
     ctx.globalAlpha = opacity;
-    ctx.strokeStyle = '#00ff88'; // Verde Neon
-    ctx.lineWidth = 3;
+    ctx.fillStyle = '#00ff88'; // Verde Neon
     
-    // Círculo central
+    // Núcleo
     ctx.beginPath();
-    ctx.arc(0, 0, size, 0, Math.PI * 2);
-    ctx.stroke();
+    ctx.arc(0, 0, size * 0.6, 0, Math.PI * 2);
+    ctx.fill();
 
-    // Raios
-    for(let i=0; i<8; i++) {
+    // Raios (Retângulos arredondados)
+    for (let i = 0; i < 8; i++) {
         ctx.rotate(Math.PI / 4);
-        ctx.beginPath();
-        ctx.moveTo(size + 5, 0);
-        ctx.lineTo(size + 15, 0);
-        ctx.stroke();
+        ctx.fillRect(size * 0.8, -2, size * 0.4, 4);
     }
     ctx.restore();
 }
 
-function drawCloud(x, y, size, opacity) {
+// Desenho de uma Nuvem Sólida (Composta por círculos e base plana)
+function drawModernCloud(x, y, size, opacity) {
     ctx.save();
     ctx.translate(x, y);
     ctx.globalAlpha = opacity;
-    ctx.strokeStyle = '#00d2ff'; // Ciano
-    ctx.lineWidth = 3;
+    ctx.fillStyle = '#00d2ff'; // Ciano
     
     ctx.beginPath();
-    ctx.arc(0, 0, size, Math.PI * 0.5, Math.PI * 1.5);
-    ctx.arc(size * 0.7, -size * 0.5, size * 0.7, Math.PI * 1, Math.PI * 1.85);
-    ctx.arc(size * 1.4, 0, size * 0.5, Math.PI * 1.37, Math.PI * 0.5);
+    ctx.arc(0, 0, size * 0.5, 0, Math.PI * 2); // Esquerda
+    ctx.arc(size * 0.5, -size * 0.3, size * 0.6, 0, Math.PI * 2); // Meio
+    ctx.arc(size, 0, size * 0.4, 0, Math.PI * 2); // Direita
+    ctx.rect(0, -size * 0.1, size, size * 0.5); // Base plana
+    ctx.fill();
+    ctx.restore();
+}
+
+// Desenho de um Raio Estilizado (Forma de Z agressiva)
+function drawModernBolt(x, y, size, opacity) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.globalAlpha = opacity;
+    ctx.fillStyle = '#00ff88';
+    
+    ctx.beginPath();
+    ctx.moveTo(size * 0.2, -size);
+    ctx.lineTo(-size * 0.4, 0);
+    ctx.lineTo(0, 0);
+    ctx.lineTo(-size * 0.2, size);
+    ctx.lineTo(size * 0.4, 0);
+    ctx.lineTo(0, 0);
     ctx.closePath();
-    ctx.stroke();
+    ctx.fill();
     ctx.restore();
 }
 
-function drawLightning(x, y, size, opacity) {
+// Desenho de Gotas de Chuva (Geométricas)
+function drawModernRain(x, y, size, opacity) {
     ctx.save();
     ctx.translate(x, y);
     ctx.globalAlpha = opacity;
-    ctx.strokeStyle = '#00ff88';
-    ctx.lineWidth = 3;
-    ctx.lineJoin = 'round';
+    ctx.fillStyle = '#00d2ff';
     
-    ctx.beginPath();
-    ctx.moveTo(10, -size);
-    ctx.lineTo(-5, 0);
-    ctx.lineTo(5, 0);
-    ctx.lineTo(-10, size);
-    ctx.stroke();
+    for(let i=0; i<3; i++) {
+        ctx.beginPath();
+        ctx.arc(i*15, i*10, 3, 0, Math.PI * 2);
+        ctx.fill();
+    }
     ctx.restore();
 }
 
-class WeatherShape {
+class WeatherElement {
     constructor(type, x, y, size) {
-        this.type = type; // 'sun', 'cloud', 'lightning'
+        this.type = type;
         this.x = x;
         this.y = y;
         this.size = size;
-        this.opacity = Math.random() * 0.3 + 0.1;
-        this.pulseSpeed = Math.random() * 0.005 + 0.002;
-        this.pulseDir = 1;
+        this.opacity = Math.random() * 0.2 + 0.05;
+        this.pulse = Math.random() * Math.PI; // Início aleatório do pulso
     }
 
     update() {
-        this.opacity += this.pulseSpeed * this.pulseDir;
-        if (this.opacity > 0.5 || this.opacity < 0.1) {
-            this.pulseDir *= -1;
-        }
+        this.pulse += 0.02;
+        // Pulsação suave usando seno
+        this.currentOpacity = this.opacity + (Math.sin(this.pulse) * 0.05);
     }
 
     draw() {
-        if (this.type === 'sun') drawSun(this.x, this.y, this.size, this.opacity);
-        else if (this.type === 'cloud') drawCloud(this.x, this.y, this.size, this.opacity);
-        else if (this.type === 'lightning') drawLightning(this.x, this.y, this.size, this.opacity);
+        if (this.type === 'sun') drawModernSun(this.x, this.y, this.size, this.currentOpacity);
+        else if (this.type === 'cloud') drawModernCloud(this.x, this.y, this.size, this.currentOpacity);
+        else if (this.type === 'bolt') drawModernBolt(this.x, this.y, this.size, this.currentOpacity);
+        else if (this.type === 'rain') drawModernRain(this.x, this.y, this.size, this.currentOpacity);
     }
 }
 
 function initAnimation() {
     icons = [];
+    const stepX = width / 4;
+    const stepY = height / 3;
+
+    // Distribuição em grade para evitar bagunça e sobreposição
+    const types = ['sun', 'cloud', 'bolt', 'rain'];
     
-    // Posicionamento manual para evitar sobreposição (Grid 2x2 imaginário)
-    // Canto Superior Esquerdo
-    icons.push(new WeatherShape('sun', width * 0.15, height * 0.2, 30));
-    // Canto Superior Direito
-    icons.push(new WeatherShape('cloud', width * 0.85, height * 0.15, 40));
-    // Canto Inferior Esquerdo
-    icons.push(new WeatherShape('cloud', width * 0.1, height * 0.85, 35));
-    // Canto Inferior Direito
-    icons.push(new WeatherShape('lightning', width * 0.9, height * 0.8, 40));
-    // Centro Esquerda
-    icons.push(new WeatherShape('lightning', width * 0.05, height * 0.5, 25));
-    // Centro Direita
-    icons.push(new WeatherShape('sun', width * 0.95, height * 0.4, 25));
+    for(let i = 0; i < 4; i++) {
+        for(let j = 0; j < 3; j++) {
+            // Adiciona um deslocamento aleatório leve para não parecer uma grade perfeita de Excel
+            const x = (i * stepX) + (stepX/2) + (Math.random() * 40 - 20);
+            const y = (j * stepY) + (stepY/2) + (Math.random() * 40 - 20);
+            const type = types[(i + j) % types.length];
+            icons.push(new WeatherElement(type, x, y, 40));
+        }
+    }
 }
 
 function animate() {
     ctx.clearRect(0, 0, width, height);
-    icons.forEach(i => {
-        i.update();
-        i.draw();
+    icons.forEach(icon => {
+        icon.update();
+        icon.draw();
     });
     requestAnimationFrame(animate);
 }
 
 window.addEventListener('resize', resize);
-// Inicializa
+// Start
 width = canvas.width = window.innerWidth;
 height = canvas.height = window.innerHeight;
 initAnimation();
