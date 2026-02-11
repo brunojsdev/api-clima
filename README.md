@@ -18,3 +18,5 @@ Interface de previsão do tempo que simula o comportamento de uma aplicação me
 * clima.html
 * clima.css
 * clima.js
+* img/: Diretório dedicado exclusivamente ao **favicon** do projeto.
+* README.md: Documentação detalhada sobre o projeto.
