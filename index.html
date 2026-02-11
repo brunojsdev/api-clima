@@ -4,12 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clima | Bruno Silveira</title>
-    <link rel="icon" type="image/png" href="./img/fi-port.png">
+    <link rel="icon" type="image/png" href="img/favicon-clima.png">
     <link rel="stylesheet" href="clima.css">
+    <style>
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+    </style>
 </head>
 <body>
+    <canvas id="bg-canvas"></canvas>
 
     <div class="weather-card" id="weather-card">
+        <!-- (Conteúdo do clima continua igual...) -->
         <div class="icon">⛅</div>
         <div class="temp">24°C</div>
         <div class="city">São Bernardo do Campo</div>
@@ -17,8 +29,7 @@
         <div class="status">Última atualização: Agora</div>
     </div>
 
-    <!-- Botão Voltar -->
-    <a href="https://brunojsdev.github.io/meu-portfolio/" class="btn-voltar">← Voltar ao Início</a>
+    <a href="index.html" class="btn-voltar">← Voltar ao Início</a>
 
     <script src="clima.js"></script>
 </body>
